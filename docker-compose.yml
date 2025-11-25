@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # Ping Pong Game
+  ping-pong-backend:
+    build: ./packages/games/ping-pong/backend
+    container_name: ping-pong-backend
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+    networks:
+      - arcade-network
+
+  ping-pong-frontend:
+    build: ./packages/games/ping-pong/frontend
+    container_name: ping-pong-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - ping-pong-backend
+    networks:
+      - arcade-network
+
+  # Golf Game
+  golf-backend:
+    build: ./packages/games/golf/backend
+    container_name: golf-backend
+    ports:
+      - "4001:4001"
+    environment:
+      - PORT=4001
+    networks:
+      - arcade-network
+
+  golf-frontend:
+    build: ./packages/games/golf/frontend
+    container_name: golf-frontend
+    ports:
+      - "5174:80"
+    depends_on:
+      - golf-backend
+    networks:
+      - arcade-network
+
+  # Main Site
+  site:
+    build: ./packages/site
+    container_name: arcade-site
+    ports:
+      - "3000:80"
+    networks:
+      - arcade-network
+
+networks:
+  arcade-network:
+    driver: bridge
