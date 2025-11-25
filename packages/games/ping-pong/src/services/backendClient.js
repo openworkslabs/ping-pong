@@ -52,3 +52,4 @@ export function submitScore(entry) {
 export function postEvent(payload) {
   return request("/api/event", { method: "POST", body: payload });
 }
+

@@ -12,7 +12,7 @@ import {
   submitScore,
 } from "./services/backendClient.js";
 
-export default function App() {
+export default function PingPongGame() {
   const [score, setScore] = useState(0);
   const [speed, setSpeed] = useState(0);
   const [resetSignal, setResetSignal] = useState(0);
@@ -139,13 +139,14 @@ export default function App() {
 
   return (
     <div
-      className="app-root"
+      className="game-root"
       onClick={() => setResetSignal((s) => s + 1)}
       role="presentation"
     >
       <div className="overlay">
         <div className="overlay-left">
           <div>
+            <a href="/" className="back-link">← Back to Games</a>
             <div className="title">First-Person Ping Pong</div>
             <div className="hint">
               Move mouse to control paddle. Click anywhere to restart.
@@ -203,7 +204,7 @@ export default function App() {
             )}
             {submittingScore && (
               <div className="status-line muted">
-                We’ll save your next score after this rally.
+                We'll save your next score after this rally.
               </div>
             )}
           </div>
@@ -229,3 +230,4 @@ export default function App() {
     </div>
   );
 }
+

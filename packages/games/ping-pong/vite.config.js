@@ -3,6 +3,10 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  base: "/games/ping-pong/",
+  build: {
+    outDir: "dist",
+  },
   server: {
     proxy: {
       "/api": {
