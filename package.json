@@ -1,0 +1,21 @@
+{
+  "name": "first-person-ping-pong",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.121.0",
+    "@react-three/fiber": "^8.15.16",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.161.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.1.0",
+    "vite": "^5.0.0"
+  }
+}
