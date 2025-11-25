@@ -8,6 +8,8 @@ const FIELD = {
   depth: 20,
 };
 
+const GRAVITY = -18; // downward acceleration for the ball (units per second^2)
+
 function Arena() {
   const { width, depth } = FIELD;
 
@@ -173,19 +175,44 @@ export default function GameScene({
     // Ball / physics
     if (!runningRef.current) return;
 
+    // Apply gravity to the ball
+    ballVelocity.current.y += GRAVITY * delta;
+
     const nextPos = ballRef.current.position
       .clone()
       .addScaledVector(ballVelocity.current, delta);
 
     const halfW = width / 2;
-    const halfH = height / 2;
 
-    // Wall collisions
+    // Side wall collisions (left/right)
     if (nextPos.x <= -halfW || nextPos.x >= halfW) {
       ballVelocity.current.x *= -1;
     }
-    if (nextPos.y <= -halfH || nextPos.y >= halfH) {
-      ballVelocity.current.y *= -1;
+
+    // Table collision (bounce off top surface, no ceiling)
+    const ballRadius = 0.25;
+    const tableTopY = -1.1;
+    const tableCenterZ = -depth / 2 - 2;
+    const tableHalfZ = (depth * 0.6) / 2;
+    const tableHalfX = (width * 0.9) / 2;
+
+    const overTableX =
+      nextPos.x >= -tableHalfX && nextPos.x <= tableHalfX;
+    const overTableZ =
+      nextPos.z >= tableCenterZ - tableHalfZ &&
+      nextPos.z <= tableCenterZ + tableHalfZ;
+
+    if (
+      ballVelocity.current.y < 0 && // moving downward
+      ballRef.current.position.y - ballRadius >= tableTopY && // above table this frame
+      nextPos.y - ballRadius <= tableTopY && // will cross table plane
+      overTableX &&
+      overTableZ
+    ) {
+      // Reflect with slight damping for a realistic bounce
+      ballVelocity.current.y *= -0.85;
+      // Nudge ball just above the surface to avoid sticking
+      ballRef.current.position.y = tableTopY + ballRadius + 0.001;
     }
 
     // Paddle collision
@@ -200,7 +227,6 @@ export default function GameScene({
       maxZ: paddle.position.z + 0.4,
     };
 
-    const ballRadius = 0.25;
     const ballNextBounds = {
       minX: nextPos.x - ballRadius,
       maxX: nextPos.x + ballRadius,
