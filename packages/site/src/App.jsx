@@ -2,141 +2,133 @@ import React, { useState } from "react";
 import GameCard from "./components/GameCard.jsx";
 import "./styles.css";
 
-// Game registry - add new games here
+// Enhanced game registry with mock "author" data for the UI
 const GAMES = [
   {
     id: "ping-pong",
     title: "First-Person Ping Pong",
-    description: "Control your paddle and keep the rally going in this immersive 3D ping pong experience.",
+    description: "Control your paddle and keep the rally going.",
     thumbnail: "/thumbnails/ping-pong.svg",
     path: "/games/ping-pong/",
     category: "Sports",
-    tags: ["3D", "Multiplayer Ready"],
-    color: "#3b82f6",
-  },
-  {
-    id: "coming-soon-1",
-    title: "Space Invaders",
-    description: "Classic arcade action reimagined with modern graphics.",
-    thumbnail: null,
-    path: null,
-    category: "Arcade",
-    tags: ["Coming Soon"],
-    color: "#8b5cf6",
-    comingSoon: true,
-  },
-  {
-    id: "coming-soon-2",
-    title: "Puzzle Quest",
-    description: "Brain-teasing puzzles that will challenge your logic.",
-    thumbnail: null,
-    path: null,
-    category: "Puzzle",
-    tags: ["Coming Soon"],
-    color: "#10b981",
-    comingSoon: true,
-  },
-  {
-    id: "coming-soon-3",
-    title: "Racing Fury",
-    description: "High-speed racing with stunning visuals.",
-    thumbnail: null,
-    path: null,
-    category: "Racing",
-    tags: ["Coming Soon"],
-    color: "#f59e0b",
-    comingSoon: true,
+    tags: ["3D", "Multiplayer"],
+    author: "Nicholas C.",
+    badge: "PRO",
   },
 ];
 
-const CATEGORIES = ["All", ...new Set(GAMES.map(g => g.category))];
+const CATEGORIES = ["All", ...new Set(GAMES.map((g) => g.category))];
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredGames = GAMES.filter(game => {
+  const filteredGames = GAMES.filter((game) => {
     const matchesCategory = selectedCategory === "All" || game.category === selectedCategory;
-    const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          game.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch =
+      game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      game.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
   return (
-    <div className="site-root">
-      <header className="site-header">
-        <div className="header-content">
-          <div className="logo">
-            <span className="logo-icon">🎮</span>
-            <span className="logo-text">Arcade</span>
+    <div className="min-h-screen flex flex-col bg-bg-primary text-primary font-sans">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-white border-b border-border h-20 flex items-center">
+        <div className="w-full max-w-[1400px] mx-auto px-8 flex items-center justify-between gap-10">
+          <div className="flex items-center gap-2 font-bold text-xl text-primary no-underline">
+            <span>Arcade</span>
           </div>
-          <nav className="nav-links">
-            <a href="#games" className="nav-link active">Games</a>
-            <a href="#about" className="nav-link">About</a>
+
+          <nav className="hidden md:flex gap-6 mr-auto">
+            {["Inspiration", "Find Games", "Learn", "Go Pro"].map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-secondary font-medium text-sm hover:text-primary transition-colors"
+              >
+                {link}
+              </a>
+            ))}
           </nav>
+
+          <div className="flex items-center gap-4">
+            <a
+              href="#"
+              className="px-5 py-2.5 rounded-lg text-sm font-medium text-secondary hover:text-primary transition-colors"
+            >
+              Log in
+            </a>
+            <a
+              href="#"
+              className="px-5 py-2.5 rounded-lg text-sm font-medium bg-primary text-white hover:bg-[#3d3d4e] transition-colors"
+            >
+              Sign up
+            </a>
+          </div>
         </div>
       </header>
 
-      <main className="site-main">
-        <section className="hero">
-          <div className="hero-content">
-            <h1 className="hero-title">
-              Play Amazing
-              <span className="hero-highlight"> Browser Games</span>
-            </h1>
-            <p className="hero-subtitle">
-              Dive into our collection of immersive games. No downloads, no installs — just pure fun.
-            </p>
-          </div>
-          <div className="hero-glow"></div>
-        </section>
+      {/* Hero / Search Area */}
+      <div className="w-full max-w-[1400px] mx-auto px-8 pt-10 pb-5 text-center">
+        <h1 className="text-2xl font-medium mb-6 text-primary">What are you looking for?</h1>
 
-        <section id="games" className="games-section">
-          <div className="games-header">
-            <div className="search-bar">
-              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="m21 21-4.35-4.35"/>
-              </svg>
-              <input
-                type="text"
-                placeholder="Search games..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-input"
-              />
-            </div>
-            <div className="category-filters">
-              {CATEGORIES.map(cat => (
-                <button
-                  key={cat}
-                  className={`category-btn ${selectedCategory === cat ? "active" : ""}`}
-                  onClick={() => setSelectedCategory(cat)}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+        <div className="relative max-w-[600px] mx-auto mb-10">
+          <div className="flex items-center bg-[#f3f3f4] border border-transparent rounded-lg px-4 py-2 transition-all focus-within:bg-white focus-within:border-[rgba(234,76,137,0.4)] focus-within:shadow-[0_0_0_4px_rgba(234,76,137,0.1)]">
+            <svg
+              className="w-5 h-5 text-secondary"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-transparent border-none px-3 py-2 text-base text-primary outline-none placeholder-[#9e9ea7]"
+            />
           </div>
+        </div>
 
-          <div className="games-grid">
-            {filteredGames.map(game => (
-              <GameCard key={game.id} game={game} />
-            ))}
-          </div>
+        <div className="flex justify-center flex-wrap gap-3 mt-6">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all
+                ${
+                  selectedCategory === cat
+                    ? "bg-[#f3f3f4] text-primary"
+                    : "bg-transparent text-secondary hover:text-primary"
+                }`}
+              onClick={() => setSelectedCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
 
-          {filteredGames.length === 0 && (
-            <div className="no-results">
-              <p>No games found matching your criteria.</p>
-            </div>
-          )}
-        </section>
+      {/* Games Grid */}
+      <main className="w-full max-w-[1400px] mx-auto px-8 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-9">
+          {filteredGames.map((game) => (
+            <GameCard key={game.id} game={game} />
+          ))}
+        </div>
+
+        {filteredGames.length === 0 && (
+          <div className="text-center py-10 text-[#999]">No results found.</div>
+        )}
       </main>
 
-      <footer className="site-footer">
-        <p>Built with ❤️ for gamers everywhere</p>
+      <footer className="mt-auto py-10 px-8 text-center text-secondary text-sm border-t border-border bg-[#fafafb]">
+        <p>© 2024 Arcade Inc. All rights reserved.</p>
       </footer>
     </div>
   );
 }
-

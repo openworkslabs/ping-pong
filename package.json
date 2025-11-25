@@ -17,9 +17,11 @@
     "build:games": "npm run build -w @arcade/ping-pong",
     "build:ping-pong": "npm run build -w @arcade/ping-pong",
     "preview": "npm run preview -w @arcade/site",
-    "server:go": "cd packages/server && go run ."
+    "server:go": "cd packages/server && go run .",
+    "format": "prettier --write ."
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "prettier": "^3.6.2"
   }
 }

@@ -1,16 +1,7 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import GameScene from "./GameScene.jsx";
-import {
-  fetchConfig,
-  fetchLeaderboard,
-  submitScore,
-} from "./services/backendClient.js";
+import { fetchConfig, fetchLeaderboard, submitScore } from "./services/backendClient.js";
 
 export default function PingPongGame() {
   const [score, setScore] = useState(0);
@@ -138,24 +129,17 @@ export default function PingPongGame() {
   const leaderboardEntries = leaderboard.slice(0, 5);
 
   return (
-    <div
-      className="game-root"
-      onClick={() => setResetSignal((s) => s + 1)}
-      role="presentation"
-    >
+    <div className="game-root" onClick={() => setResetSignal((s) => s + 1)} role="presentation">
       <div className="overlay">
         <div className="overlay-left">
           <div>
-            <a href="/" className="back-link">← Back to Games</a>
+            <a href="/" className="back-link">
+              ← Back to Games
+            </a>
             <div className="title">First-Person Ping Pong</div>
-            <div className="hint">
-              Move mouse to control paddle. Click anywhere to restart.
-            </div>
+            <div className="hint">Move mouse to control paddle. Click anywhere to restart.</div>
           </div>
-          <div
-            className="hud-panel leaderboard-panel"
-            onClick={(event) => event.stopPropagation()}
-          >
+          <div className="hud-panel leaderboard-panel" onClick={(event) => event.stopPropagation()}>
             <div className="panel-heading">Leaderboard</div>
             <label className="form-label" htmlFor="player-name">
               Player name
@@ -168,11 +152,7 @@ export default function PingPongGame() {
               placeholder="Anonymous"
             />
             <div className="leaderboard-actions">
-              <button
-                type="button"
-                onClick={loadLeaderboard}
-                disabled={leaderboardLoading}
-              >
+              <button type="button" onClick={loadLeaderboard} disabled={leaderboardLoading}>
                 {leaderboardLoading ? "Refreshing..." : "Refresh"}
               </button>
               {config ? (
@@ -196,16 +176,10 @@ export default function PingPongGame() {
                 ))
               )}
             </ol>
-            {leaderboardError && (
-              <div className="status-line error">{leaderboardError}</div>
-            )}
-            {submissionStatus && (
-              <div className="status-line">{submissionStatus}</div>
-            )}
+            {leaderboardError && <div className="status-line error">{leaderboardError}</div>}
+            {submissionStatus && <div className="status-line">{submissionStatus}</div>}
             {submittingScore && (
-              <div className="status-line muted">
-                We'll save your next score after this rally.
-              </div>
+              <div className="status-line muted">We'll save your next score after this rally.</div>
             )}
           </div>
         </div>
@@ -216,9 +190,7 @@ export default function PingPongGame() {
       </div>
 
       <div className="canvas-container">
-        <Canvas
-          camera={{ fov: 70, near: 0.1, far: 100, position: [0, 0, 0] }}
-        >
+        <Canvas camera={{ fov: 70, near: 0.1, far: 100, position: [0, 0, 0] }}>
           <GameScene
             onScoreChange={setScore}
             onSpeedChange={setSpeed}
@@ -230,4 +202,3 @@ export default function PingPongGame() {
     </div>
   );
 }
-

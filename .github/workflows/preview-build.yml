@@ -29,5 +29,3 @@ jobs:
         with:
           name: vite-dist
           path: dist
-
-

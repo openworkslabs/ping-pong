@@ -28,16 +28,19 @@ npm install
 ### Development
 
 Run the main site:
+
 ```bash
 npm run dev:site
 ```
 
 Run a specific game:
+
 ```bash
 npm run dev:ping-pong
 ```
 
 Run the Go backend:
+
 ```bash
 npm run server:go
 ```
@@ -45,6 +48,7 @@ npm run server:go
 ### Building for Production
 
 Build everything:
+
 ```bash
 npm run build
 ```

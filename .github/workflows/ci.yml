@@ -38,4 +38,3 @@ jobs:
       - name: Run Go tests
         working-directory: server
         run: go test ./...
-

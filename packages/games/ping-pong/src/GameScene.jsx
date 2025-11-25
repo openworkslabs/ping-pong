@@ -21,11 +21,7 @@ function Arena() {
       {/* Table top */}
       <mesh position={[0, -1.2, -depth / 2 - 2]}>
         <boxGeometry args={[width * 0.9, 0.2, depth * 0.6]} />
-        <meshStandardMaterial
-          color={tableColor}
-          metalness={0.2}
-          roughness={0.4}
-        />
+        <meshStandardMaterial color={tableColor} metalness={0.2} roughness={0.4} />
       </mesh>
 
       {/* Table edge lines */}
@@ -98,21 +94,12 @@ function Lights() {
       {/* Overhead light simulating indoor hall */}
       <directionalLight intensity={1.1} position={[0, 6, -4]} />
       {/* Soft colored fill from table */}
-      <hemisphereLight
-        skyColor={0x38bdf8}
-        groundColor={0x0f172a}
-        intensity={0.4}
-      />
+      <hemisphereLight skyColor={0x38bdf8} groundColor={0x0f172a} intensity={0.4} />
     </>
   );
 }
 
-export default function GameScene({
-  onScoreChange,
-  onSpeedChange,
-  onGameOver,
-  resetSignal,
-}) {
+export default function GameScene({ onScoreChange, onSpeedChange, onGameOver, resetSignal }) {
   const { camera } = useThree();
   const paddleRef = useRef();
   const ballRef = useRef();
@@ -168,10 +155,8 @@ export default function GameScene({
     const targetX = mouseNDC.current.x * (width * 0.35);
     const targetY = mouseNDC.current.y * (height * 0.25) - 0.8;
     const lerpFactor = Math.min(1, delta * 10);
-    paddleRef.current.position.x +=
-      (targetX - paddleRef.current.position.x) * lerpFactor;
-    paddleRef.current.position.y +=
-      (targetY - paddleRef.current.position.y) * lerpFactor;
+    paddleRef.current.position.x += (targetX - paddleRef.current.position.x) * lerpFactor;
+    paddleRef.current.position.y += (targetY - paddleRef.current.position.y) * lerpFactor;
 
     // Ball / physics
     if (!runningRef.current) return;
@@ -179,9 +164,7 @@ export default function GameScene({
     // Apply gravity to the ball
     ballVelocity.current.y += GRAVITY * delta;
 
-    const nextPos = ballRef.current.position
-      .clone()
-      .addScaledVector(ballVelocity.current, delta);
+    const nextPos = ballRef.current.position.clone().addScaledVector(ballVelocity.current, delta);
 
     const halfW = width / 2;
 
@@ -197,11 +180,9 @@ export default function GameScene({
     const tableHalfZ = (depth * 0.6) / 2;
     const tableHalfX = (width * 0.9) / 2;
 
-    const overTableX =
-      nextPos.x >= -tableHalfX && nextPos.x <= tableHalfX;
+    const overTableX = nextPos.x >= -tableHalfX && nextPos.x <= tableHalfX;
     const overTableZ =
-      nextPos.z >= tableCenterZ - tableHalfZ &&
-      nextPos.z <= tableCenterZ + tableHalfZ;
+      nextPos.z >= tableCenterZ - tableHalfZ && nextPos.z <= tableCenterZ + tableHalfZ;
 
     if (
       ballVelocity.current.y < 0 && // moving downward
@@ -238,14 +219,11 @@ export default function GameScene({
     };
 
     const overlapX =
-      ballNextBounds.maxX >= paddleBounds.minX &&
-      ballNextBounds.minX <= paddleBounds.maxX;
+      ballNextBounds.maxX >= paddleBounds.minX && ballNextBounds.minX <= paddleBounds.maxX;
     const overlapY =
-      ballNextBounds.maxY >= paddleBounds.minY &&
-      ballNextBounds.minY <= paddleBounds.maxY;
+      ballNextBounds.maxY >= paddleBounds.minY && ballNextBounds.minY <= paddleBounds.maxY;
     const overlapZ =
-      ballNextBounds.maxZ >= paddleBounds.minZ &&
-      ballNextBounds.minZ <= paddleBounds.maxZ;
+      ballNextBounds.maxZ >= paddleBounds.minZ && ballNextBounds.minZ <= paddleBounds.maxZ;
 
     if (overlapX && overlapY && overlapZ && ballVelocity.current.z > 0) {
       ballVelocity.current.z *= -1;
@@ -286,17 +264,9 @@ export default function GameScene({
       <Arena />
 
       {/* Paddle - stylized ping pong bat */}
-      <group
-        ref={paddleRef}
-        position={[0, -0.6, -3.4]}
-        rotation={[-Math.PI / 18, 0, 0]}
-      >
+      <group ref={paddleRef} position={[0, -0.6, -3.4]} rotation={[-Math.PI / 18, 0, 0]}>
         {/* Head (flipped so the face points toward the ball) */}
-        <mesh
-          position={[0, 0.35, 0]}
-          rotation={[Math.PI / 2, 0, 0]}
-          scale={[0.9, 1.15, 1]}
-        >
+        <mesh position={[0, 0.35, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[0.9, 1.15, 1]}>
           <cylinderGeometry args={[0.9, 0.9, 0.12, 32]} />
           <meshStandardMaterial
             color={0xdc2626}
@@ -333,4 +303,3 @@ export default function GameScene({
     </>
   );
 }
-

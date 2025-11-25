@@ -1,11 +1,7 @@
 const DEFAULT_BASE =
-  import.meta.env.VITE_API_BASE_URL ||
-  (import.meta.env.DEV ? "http://localhost:4000" : "");
+  import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? "http://localhost:4000" : "");
 
-const base =
-  typeof DEFAULT_BASE === "string"
-    ? DEFAULT_BASE.replace(/\/$/, "")
-    : "";
+const base = typeof DEFAULT_BASE === "string" ? DEFAULT_BASE.replace(/\/$/, "") : "";
 
 function buildUrl(path) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
@@ -52,4 +48,3 @@ export function submitScore(entry) {
 export function postEvent(payload) {
   return request("/api/event", { method: "POST", body: payload });
 }
-
