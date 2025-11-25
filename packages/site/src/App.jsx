@@ -36,11 +36,11 @@ export default function App() {
       {/* Header */}
       <header className="sticky top-4 z-50 flex justify-center px-4">
         <div className="w-full max-w-[1000px] bg-white/90 backdrop-blur-md rounded-full border border-gray-200 shadow-sm px-6 py-3 flex items-center justify-between gap-6">
-          <div className="flex items-center gap-2 font-bold text-xl text-primary no-underline shrink-0">
+          <div className="flex items-center gap-2 font-bold text-xl text-primary no-underline shrink-0 flex-1">
             <span>Arcade</span>
           </div>
 
-          <nav className="hidden md:flex gap-6 items-center">
+          <nav className="hidden md:flex gap-8 items-center justify-center flex-1">
             {["Inspiration", "Find Games", "Learn"].map((link) => (
               <a
                 key={link}
@@ -52,7 +52,7 @@ export default function App() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center justify-end gap-3 shrink-0 flex-1">
             <a
               href="#"
               className="hidden sm:block px-4 py-2 rounded-full text-sm font-medium text-secondary hover:text-primary transition-colors"
@@ -126,7 +126,7 @@ export default function App() {
         )}
       </main>
 
-      <footer className="mt-auto py-10 px-8 text-center text-secondary text-sm border-t border-border bg-[#fafafb]">
+      <footer className="mt-auto py-6 px-8 text-center text-secondary text-sm border-t border-border bg-[#fafafb]">
         <p>© 2024 Arcade Inc. All rights reserved.</p>
       </footer>
     </div>

@@ -1,5 +1,5 @@
 {
-  "name": "@arcade/server",
+  "name": "@arcade/ping-pong-backend",
   "version": "0.0.1",
   "private": true,
   "scripts": {

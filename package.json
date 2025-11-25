@@ -4,20 +4,20 @@
   "private": true,
   "workspaces": [
     "packages/site",
-    "packages/games/*",
-    "packages/server"
+    "packages/games/*/frontend",
+    "packages/games/*/backend"
   ],
   "scripts": {
     "dev": "npm run dev:site",
     "dev:site": "npm run dev -w @arcade/site",
-    "dev:ping-pong": "npm run dev -w @arcade/ping-pong",
-    "dev:all": "concurrently \"npm run dev:site\" \"npm run dev:ping-pong\"",
+    "dev:ping-pong": "npm run dev -w @arcade/ping-pong-frontend",
+    "dev:ping-pong-backend": "npm run start -w @arcade/ping-pong-backend",
+    "dev:all": "concurrently \"npm run dev:site\" \"npm run dev:ping-pong\" \"npm run dev:ping-pong-backend\"",
     "build": "npm run build:site && npm run build:games",
     "build:site": "npm run build -w @arcade/site",
-    "build:games": "npm run build -w @arcade/ping-pong",
-    "build:ping-pong": "npm run build -w @arcade/ping-pong",
+    "build:games": "npm run build -w @arcade/ping-pong-frontend",
+    "build:ping-pong": "npm run build -w @arcade/ping-pong-frontend",
     "preview": "npm run preview -w @arcade/site",
-    "server:go": "cd packages/server && go run .",
     "format": "prettier --write ."
   },
   "devDependencies": {
