@@ -95,10 +95,17 @@ It exposes the following HTTP and WebSocket endpoints on port `4000`:
 - In production, set `VITE_API_BASE_URL` to the origin where the Go service is running (defaults to the same origin as the frontend bundle). The React app uses that value for fetch calls and to submit scores / fetch leaderboards.
 - The frontend automatically submits your score when a rally ends and renders the live leaderboard + remote config that comes from the Go API.
 
+## Docker & Compose
+
+- Build the backend image alone with `docker build -t fp-pp-server .` (uses the multi-stage Go Dockerfile).
+- Run both the Vite dev server and the Go backend together with `docker compose up --build`. This uses:
+  - `api` – builds the Go image from the Dockerfile and serves it on port `4000`.
+  - `frontend` – runs `npm run dev` inside a Node 20 container (watching the mounted repo) on port `5173`, pointing `VITE_API_BASE_URL` at the `api` service.
+- Visit `http://localhost:5173` when the stack is up; hot reload still works because the source folder is bind-mounted into the frontend container.
+
 ## Future Ideas
 
 - Webcam **hand tracking** (e.g., MediaPipe Hands) to drive the paddle instead of the mouse
 - AI opponent / target zones to hit
 - Spin visualization and sound design
 - VR support using WebXR
-
