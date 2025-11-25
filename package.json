@@ -17,7 +17,7 @@
     "dev:all": "concurrently \"npm run dev:site\" \"npm run dev:ping-pong\" \"npm run dev:ping-pong-backend\"",
     "build": "npm run build:site && npm run build:games",
     "build:site": "npm run build -w @arcade/site",
-    "build:games": "npm run build -w @arcade/ping-pong-frontend",
+    "build:games": "npm run build:ping-pong && npm run build:golf",
     "build:ping-pong": "npm run build -w @arcade/ping-pong-frontend",
     "build:golf": "npm run build -w @arcade/golf-frontend",
     "preview": "npm run preview -w @arcade/site",
