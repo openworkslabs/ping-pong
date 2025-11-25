@@ -214,7 +214,11 @@ export default function GameScene({
         rotation={[-Math.PI / 18, 0, 0]}
       >
         {/* Head (flipped so the face points toward the ball) */}
-        <mesh position={[0, 0.35, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <mesh
+          position={[0, 0.35, 0]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={[0.9, 1.15, 1]}
+        >
           <cylinderGeometry args={[0.9, 0.9, 0.12, 32]} />
           <meshStandardMaterial
             color={0xdc2626}
@@ -225,8 +229,8 @@ export default function GameScene({
           />
         </mesh>
         {/* Handle, attached to the bottom of the head */}
-        <mesh position={[0, -0.45, 0.1]}>
-          <boxGeometry args={[0.35, 1.0, 0.18]} />
+        <mesh position={[0, -0.58, 0.1]}>
+          <boxGeometry args={[0.35, 1.1, 0.18]} />
           <meshStandardMaterial
             color={0xf59e0b}
             metalness={0.1}
