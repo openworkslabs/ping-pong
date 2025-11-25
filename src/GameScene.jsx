@@ -9,48 +9,81 @@ const FIELD = {
 };
 
 function Arena() {
-  const { width, height, depth } = FIELD;
+  const { width, depth } = FIELD;
 
-  const wallMaterial = new THREE.MeshStandardMaterial({
-    color: 0x1e293b,
-    metalness: 0.2,
-    roughness: 0.7,
-    transparent: true,
-    opacity: 0.8,
-  });
+  const tableColor = 0x1d4ed8; // bright-ish blue table
+  const wallColor = 0x0f172a; // dark walls for contrast
 
   return (
     <group>
-      {/* Floor */}
-      <mesh
-        position={[0, -height / 2, -depth / 2 - 4]}
-        geometry={new THREE.BoxGeometry(width, 0.2, depth)}
-        material={wallMaterial}
-      />
-      {/* Ceiling */}
-      <mesh
-        position={[0, height / 2, -depth / 2 - 4]}
-        geometry={new THREE.BoxGeometry(width, 0.2, depth)}
-        material={wallMaterial}
-      />
-      {/* Left */}
-      <mesh
-        position={[-width / 2, 0, -depth / 2 - 4]}
-        geometry={new THREE.BoxGeometry(0.2, height, depth)}
-        material={wallMaterial}
-      />
-      {/* Right */}
-      <mesh
-        position={[width / 2, 0, -depth / 2 - 4]}
-        geometry={new THREE.BoxGeometry(0.2, height, depth)}
-        material={wallMaterial}
-      />
+      {/* Table top */}
+      <mesh position={[0, -1.2, -depth / 2 - 2]}>
+        <boxGeometry args={[width * 0.9, 0.2, depth * 0.6]} />
+        <meshStandardMaterial
+          color={tableColor}
+          metalness={0.2}
+          roughness={0.4}
+        />
+      </mesh>
+
+      {/* Table edge lines */}
+      <mesh position={[0, -1.09, -depth / 2 - 2]}>
+        <boxGeometry args={[width * 0.9 * 0.98, 0.01, depth * 0.6 * 0.98]} />
+        <meshStandardMaterial color={0xe5e7eb} roughness={0.9} />
+      </mesh>
+
+      {/* Net with white borders */}
+      <group position={[0, -0.9, -depth / 2 - 2]}>
+        {/* Net body */}
+        <mesh>
+          <boxGeometry args={[width * 0.9, 0.4, 0.05]} />
+          <meshStandardMaterial
+            color={0x38bdf8}
+            emissive={0x0ea5e9}
+            emissiveIntensity={0.7}
+            roughness={0.3}
+          />
+        </mesh>
+        {/* Top white border */}
+        <mesh position={[0, 0.22, 0]}>
+          <boxGeometry args={[width * 0.9, 0.04, 0.06]} />
+          <meshStandardMaterial color={0xf9fafb} roughness={0.5} />
+        </mesh>
+        {/* Bottom white border */}
+        <mesh position={[0, -0.22, 0]}>
+          <boxGeometry args={[width * 0.9, 0.03, 0.06]} />
+          <meshStandardMaterial color={0xe5e7eb} roughness={0.6} />
+        </mesh>
+        {/* Side posts */}
+        <mesh position={[-(width * 0.9) / 2, 0, 0]}>
+          <boxGeometry args={[0.04, 0.5, 0.07]} />
+          <meshStandardMaterial color={0xf9fafb} roughness={0.4} />
+        </mesh>
+        <mesh position={[(width * 0.9) / 2, 0, 0]}>
+          <boxGeometry args={[0.04, 0.5, 0.07]} />
+          <meshStandardMaterial color={0xf9fafb} roughness={0.4} />
+        </mesh>
+      </group>
+
+      {/* Simple bright room walls */}
+      <mesh position={[0, -2, -depth / 2 - 2]}>
+        <boxGeometry args={[width * 1.6, 0.4, depth * 0.9]} />
+        <meshStandardMaterial color={0x111827} roughness={0.9} />
+      </mesh>
       {/* Back wall */}
-      <mesh
-        position={[0, 0, -depth - 4]}
-        geometry={new THREE.BoxGeometry(width, height, 0.2)}
-        material={wallMaterial}
-      />
+      <mesh position={[0, 0.2, -depth - 5]}>
+        <boxGeometry args={[width * 1.6, 5, 0.2]} />
+        <meshStandardMaterial color={wallColor} roughness={0.9} />
+      </mesh>
+      {/* Side walls */}
+      <mesh position={[-width * 0.9, 0.2, -depth / 2 - 4]}>
+        <boxGeometry args={[0.2, 5, depth * 0.9]} />
+        <meshStandardMaterial color={wallColor} roughness={0.9} />
+      </mesh>
+      <mesh position={[width * 0.9, 0.2, -depth / 2 - 4]}>
+        <boxGeometry args={[0.2, 5, depth * 0.9]} />
+        <meshStandardMaterial color={wallColor} roughness={0.9} />
+      </mesh>
     </group>
   );
 }
@@ -58,8 +91,16 @@ function Arena() {
 function Lights() {
   return (
     <>
-      <ambientLight intensity={0.3} />
-      <directionalLight intensity={0.9} position={[3, 5, 5]} />
+      {/* Brighter ambient fill */}
+      <ambientLight intensity={0.55} />
+      {/* Overhead light simulating indoor hall */}
+      <directionalLight intensity={1.1} position={[0, 6, -4]} />
+      {/* Soft colored fill from table */}
+      <hemisphereLight
+        skyColor={0x38bdf8}
+        groundColor={0x0f172a}
+        intensity={0.4}
+      />
     </>
   );
 }

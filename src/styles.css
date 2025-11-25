@@ -12,11 +12,11 @@ body,
 }
 
 body {
-    /* Deep neon backdrop */
+    /* Brighter backdrop behind the 3D scene */
     background:
-        radial-gradient(circle at 10% -20%, rgba(56, 189, 248, 0.32), transparent 55%),
-        radial-gradient(circle at 90% 120%, rgba(239, 68, 68, 0.35), transparent 55%),
-        radial-gradient(circle at 50% 40%, #020617, #000000 60%);
+        radial-gradient(circle at 10% -20%, rgba(96, 165, 250, 0.8), transparent 55%),
+        radial-gradient(circle at 90% 120%, rgba(45, 212, 191, 0.6), transparent 55%),
+        radial-gradient(circle at 50% 40%, #0f172a, #020617 60%);
 }
 
 .app-root {
