@@ -21,13 +21,29 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build for production
-        run: npm run build
+      - name: Build site
+        run: npm run build:site
 
-      - name: Upload dist as artifact
+      - name: Build ping-pong game
+        run: npm run build:ping-pong
+
+      - name: Build golf game
+        run: npm run build:golf
+
+      - name: Upload site dist as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: vite-dist
-          path: dist
+          name: site-dist
+          path: packages/site/dist
 
+      - name: Upload ping-pong dist as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ping-pong-dist
+          path: packages/games/ping-pong/frontend/dist
 
+      - name: Upload golf dist as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: golf-dist
+          path: packages/games/golf/frontend/dist

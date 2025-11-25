@@ -14,6 +14,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+          cache: true
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,4 +35,14 @@ jobs:
       - name: Run tests (if present)
         run: npm test --if-present
 
+      - name: Run Go tests - Ping Pong Backend
+        working-directory: packages/games/ping-pong/backend
+        run: |
+          go mod tidy
+          go test ./...
 
+      - name: Run Go tests - Golf Backend
+        working-directory: packages/games/golf/backend
+        run: |
+          go mod tidy
+          go test ./...
