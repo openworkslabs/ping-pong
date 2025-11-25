@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server:go": "cd server && go run ."
   },
   "dependencies": {
     "@react-three/drei": "^9.121.0",

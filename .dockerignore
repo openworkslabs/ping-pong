@@ -3,7 +3,5 @@ dist
 .DS_Store
 *.log
 vite.config.timestamp-*.mjs
-
-
 .history
 server/.gocache/

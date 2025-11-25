@@ -69,11 +69,36 @@ This repo includes simple CI workflows:
 
 You can customize or extend these workflows to add tests, linting, deployment, or visual regression checks.
 
+## Backend
+
+The game uses a lightweight **Go backend** (net/http + gorilla/websocket) in `server/`
+for leaderboards, analytics, remote config and multiplayer.
+
+Start it with:
+
+```bash
+cd server
+go run .
+```
+
+It exposes the following HTTP and WebSocket endpoints on port `4000`:
+
+- `GET /api/config`
+- `POST /api/score`
+- `GET /api/leaderboard`
+- `POST /api/event`
+- `GET /ws` (WebSocket)
+
+### Frontend ↔ backend communication
+
+- During development, Vite proxies `/api/*` and `/ws` requests to `http://localhost:4000`, so running `npm run dev` and `go run ./server` side-by-side just works without CORS issues.
+- In production, set `VITE_API_BASE_URL` to the origin where the Go service is running (defaults to the same origin as the frontend bundle). The React app uses that value for fetch calls and to submit scores / fetch leaderboards.
+- The frontend automatically submits your score when a rally ends and renders the live leaderboard + remote config that comes from the Go API.
+
 ## Future Ideas
 
 - Webcam **hand tracking** (e.g., MediaPipe Hands) to drive the paddle instead of the mouse
 - AI opponent / target zones to hit
 - Spin visualization and sound design
 - VR support using WebXR
-
 

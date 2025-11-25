@@ -110,6 +110,7 @@ function Lights() {
 export default function GameScene({
   onScoreChange,
   onSpeedChange,
+  onGameOver,
   resetSignal,
 }) {
   const { camera } = useThree();
@@ -262,6 +263,9 @@ export default function GameScene({
 
     // Game over if ball passes player
     if (nextPos.z > 2) {
+      if (runningRef.current && typeof onGameOver === "function") {
+        onGameOver(scoreRef.current);
+      }
       runningRef.current = false;
     }
 
@@ -329,5 +333,4 @@ export default function GameScene({
     </>
   );
 }
-
 
