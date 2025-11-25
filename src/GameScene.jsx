@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 const FIELD = {
@@ -110,12 +110,19 @@ export default function GameScene({
   onSpeedChange,
   resetSignal,
 }) {
+  const { camera } = useThree();
   const paddleRef = useRef();
   const ballRef = useRef();
   const ballVelocity = useRef(new THREE.Vector3(0, 0, -8));
   const mouseNDC = useRef({ x: 0, y: 0 });
   const runningRef = useRef(true);
   const scoreRef = useRef(0);
+
+  // Set a slightly higher, angled camera POV looking down the table
+  useEffect(() => {
+    camera.position.set(0, 1.5, 1.2);
+    camera.lookAt(0, -0.5, -6);
+  }, [camera]);
 
   const resetBall = () => {
     if (!ballRef.current) return;
@@ -251,7 +258,7 @@ export default function GameScene({
       {/* Paddle - stylized ping pong bat */}
       <group
         ref={paddleRef}
-        position={[0, -0.3, -3.4]}
+        position={[0, -0.6, -3.4]}
         rotation={[-Math.PI / 18, 0, 0]}
       >
         {/* Head (flipped so the face points toward the ball) */}
