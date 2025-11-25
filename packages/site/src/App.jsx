@@ -34,34 +34,34 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-bg-primary text-primary font-sans">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-border h-20 flex items-center">
-        <div className="w-full max-w-[1400px] mx-auto px-8 flex items-center justify-between gap-10">
-          <div className="flex items-center gap-2 font-bold text-xl text-primary no-underline">
+      <header className="sticky top-4 z-50 flex justify-center px-4">
+        <div className="w-full max-w-[1000px] bg-white/90 backdrop-blur-md rounded-full border border-gray-200 shadow-sm px-6 py-3 flex items-center justify-between gap-6">
+          <div className="flex items-center gap-2 font-bold text-xl text-primary no-underline shrink-0">
             <span>Arcade</span>
           </div>
 
-          <nav className="hidden md:flex gap-6 mr-auto">
-            {["Inspiration", "Find Games", "Learn", "Go Pro"].map((link) => (
+          <nav className="hidden md:flex gap-6 items-center">
+            {["Inspiration", "Find Games", "Learn"].map((link) => (
               <a
                 key={link}
                 href="#"
-                className="text-secondary font-medium text-sm hover:text-primary transition-colors"
+                className="text-secondary font-medium text-sm hover:text-primary transition-colors whitespace-nowrap"
               >
                 {link}
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 shrink-0">
             <a
               href="#"
-              className="px-5 py-2.5 rounded-lg text-sm font-medium text-secondary hover:text-primary transition-colors"
+              className="hidden sm:block px-4 py-2 rounded-full text-sm font-medium text-secondary hover:text-primary transition-colors"
             >
               Log in
             </a>
             <a
               href="#"
-              className="px-5 py-2.5 rounded-lg text-sm font-medium bg-primary text-white hover:bg-[#3d3d4e] transition-colors"
+              className="px-5 py-2 rounded-full text-sm font-medium bg-primary text-white hover:bg-[#3d3d4e] transition-colors"
             >
               Sign up
             </a>

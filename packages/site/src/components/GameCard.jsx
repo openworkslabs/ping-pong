@@ -34,7 +34,7 @@ export default function GameCard({ game }) {
 
         {/* Overlay with Title (appears on hover) */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100 flex items-end p-5">
-          <span className="text-white font-semibold text-base drop-shadow-sm">{game.title}</span>
+          {/* Title moved to bottom row */}
         </div>
 
         {game.comingSoon && (
@@ -47,17 +47,7 @@ export default function GameCard({ game }) {
       {/* Bottom part: Author & Stats */}
       <div className="flex items-center justify-between px-1">
         <div className="flex items-center gap-2">
-          <img
-            src={`https://api.dicebear.com/7.x/initials/svg?seed=${game.title}`}
-            alt=""
-            className="w-6 h-6 rounded-full bg-[#eee] object-cover"
-          />
-          <span className="text-sm font-medium text-primary">{game.author || "Arcade Team"}</span>
-          <span
-            className={`text-[10px] font-bold text-white px-1 py-0.5 rounded uppercase ${game.badge === "PRO" ? "bg-accent" : "bg-primary"}`}
-          >
-            {game.badge || "TEAM"}
-          </span>
+          <span className="text-sm font-medium text-primary">{game.title}</span>
         </div>
 
         <div className="flex gap-3 items-center">
