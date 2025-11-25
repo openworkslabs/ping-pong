@@ -20,7 +20,7 @@ export default function App() {
                         Move mouse to control paddle. Click anywhere to restart.
                     </div>
                 </div>
-                <div className="right">
+                <div className="right score-panel">
                     <div>Score: {score}</div>
                     <div>Speed: {speed.toFixed(1)}</div>
                 </div>

@@ -64,7 +64,11 @@ function Lights() {
   );
 }
 
-export default function GameScene({ onScoreChange, onSpeedChange, resetSignal }) {
+export default function GameScene({
+  onScoreChange,
+  onSpeedChange,
+  resetSignal,
+}) {
   const paddleRef = useRef();
   const ballRef = useRef();
   const ballVelocity = useRef(new THREE.Vector3(0, 0, -8));
@@ -110,8 +114,8 @@ export default function GameScene({ onScoreChange, onSpeedChange, resetSignal })
     const { width, height, depth } = FIELD;
 
     // Update paddle
-    const targetX = mouseNDC.current.x * (width * 0.4);
-    const targetY = mouseNDC.current.y * (height * 0.4);
+    const targetX = mouseNDC.current.x * (width * 0.35);
+    const targetY = mouseNDC.current.y * (height * 0.25) - 0.8;
     const lerpFactor = Math.min(1, delta * 10);
     paddleRef.current.position.x +=
       (targetX - paddleRef.current.position.x) * lerpFactor;
@@ -139,12 +143,13 @@ export default function GameScene({ onScoreChange, onSpeedChange, resetSignal })
     // Paddle collision
     const paddle = paddleRef.current;
     const paddleBounds = {
-      minX: paddle.position.x - 1,
-      maxX: paddle.position.x + 1,
-      minY: paddle.position.y - 0.5,
-      maxY: paddle.position.y + 0.5,
-      minZ: paddle.position.z - 0.5,
-      maxZ: paddle.position.z + 0.5,
+      // Approximate circular head + short handle as a square for collision
+      minX: paddle.position.x - 0.9,
+      maxX: paddle.position.x + 0.9,
+      minY: paddle.position.y - 0.9,
+      maxY: paddle.position.y + 0.9,
+      minZ: paddle.position.z - 0.4,
+      maxZ: paddle.position.z + 0.4,
     };
 
     const ballRadius = 0.25;
@@ -202,17 +207,35 @@ export default function GameScene({ onScoreChange, onSpeedChange, resetSignal })
       <Lights />
       <Arena />
 
-      {/* Paddle */}
-      <mesh ref={paddleRef} position={[0, 0, -3]}>
-        <boxGeometry args={[2, 1, 0.3]} />
-        <meshStandardMaterial
-          color={0x38bdf8}
-          metalness={0.3}
-          roughness={0.4}
-          emissive={0x0f172a}
-          emissiveIntensity={0.5}
-        />
-      </mesh>
+      {/* Paddle - stylized ping pong bat */}
+      <group
+        ref={paddleRef}
+        position={[0, -0.3, -3.4]}
+        rotation={[-Math.PI / 18, 0, 0]}
+      >
+        {/* Head (flipped so the face points toward the ball) */}
+        <mesh position={[0, 0.35, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.9, 0.9, 0.12, 32]} />
+          <meshStandardMaterial
+            color={0xdc2626}
+            metalness={0.2}
+            roughness={0.5}
+            emissive={0x220000}
+            emissiveIntensity={0.4}
+          />
+        </mesh>
+        {/* Handle, attached to the bottom of the head */}
+        <mesh position={[0, -0.45, 0.1]}>
+          <boxGeometry args={[0.35, 1.0, 0.18]} />
+          <meshStandardMaterial
+            color={0xf59e0b}
+            metalness={0.1}
+            roughness={0.8}
+            emissive={0x1a1206}
+            emissiveIntensity={0.3}
+          />
+        </mesh>
+      </group>
 
       {/* Ball */}
       <mesh ref={ballRef} position={[0, 0, -6]}>
